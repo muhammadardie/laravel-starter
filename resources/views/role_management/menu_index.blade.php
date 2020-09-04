@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      @include('partials.datatable-add', ['text' => 'New Menu', 'route' => route('menu.create')])
+      @include('partials.buttons.add', ['text' => 'New Menu'])
       <div class="card-body">
         @include('partials.alert')
         <div class="row">

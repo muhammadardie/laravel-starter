@@ -19,8 +19,7 @@ class ComposerServiceProvider extends ServiceProvider
             ],
             'App\Http\ViewComposers\NavigationComposer'
         );
-
-        view()->composer('partials.datatable-add','App\Http\ViewComposers\ActionsComposer');
+        view()->composer('partials.buttons.*','App\Http\ViewComposers\ActionsComposer');
     }
 
     /**

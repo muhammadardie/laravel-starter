@@ -6,9 +6,10 @@ use App\Models\RoleManagement\{ RoleMenu, MenuPermission };
 
 trait MenuPermissionTrait
 {
-
+    // get role menu by role user and current menu
     public function availablePermission() {
-        // get role menu by role user and current menu
+        if( is_null(\Auth::user()) || is_null($this->currentMenu()) ) return [];
+        
         $roleMenu = RoleMenu::where('role_id', \Auth::user()->role->role_id)
                             ->where('menu_id', $this->currentMenu()->menu_id)
                             ->first();
@@ -38,8 +39,11 @@ trait MenuPermissionTrait
         $route  = \Request::route()->getName();
         $routes = explode('.', $route);
         $currentRoute = collect();
-        $currentRoute->put('route', $routes[0]);
-        $currentRoute->put('action', ( empty($routes[1]) ? '' : $routes[1] ) );
+        
+        $actionRoute = empty($routes[1]) ? '' : array_pop($routes); // remove action route from url (last segment url)
+        $urlRoute = implode(".", $routes);
+        $currentRoute->put('route', $urlRoute);
+        $currentRoute->put('action', $actionRoute);
         $currentRoute->put('full', $route);
 
         return $currentRoute[$param];

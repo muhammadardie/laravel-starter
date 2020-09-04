@@ -65,15 +65,14 @@ class MenuPermissionRepository extends BaseRepository
    
     	}
   		
-  		return $store;
+  		return true;
     }
 
     public function datatableMenuPermission($request)
     {
         if($request->ajax())
         {
-			$sqlRowNum         = $this->getRowNum($request, 'role', 'role_id');
-			$permissions       = $this->availablePermission();
+            $sqlRowNum = $this->getRowNum($request, 'role', 'role_id');
             $role  = $this->role->getModel()->select([
                             \DB::raw($sqlRowNum),
                             'role.role_id',
@@ -81,25 +80,18 @@ class MenuPermissionRepository extends BaseRepository
                           ]);
 
         	return \DataTables::of($role)
-        			->addColumn('menu', function($role) use($permissions){
+        			->addColumn('menu', function($role){
 			            return $this->roleMenu->appendMenuByRole($role->role_id);
 			        })
-			        ->addColumn('permission', function($role) use($permissions){
+			        ->addColumn('permission', function($role){
 			            return $this->appendPermissionByRole($role->role_id);
 			        })
-        			->addColumn('action', function($role) use($permissions){
-			            $btn_action = '';
-
-			            if ( in_array("show", $permissions) ) {
-			                $btn_action .= '<a title="Show details" href="'. route('menu-permission.show', $role->role_id) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-search"></i></a>';
-			            }
-
-			            if ( in_array("edit", $permissions) ) {
-			                $btn_action .= '<a title="Edit details" href="'. route('menu-permission.edit', $role->role_id) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-edit"></i></a>';
-			            }
-
-
-			            return $btn_action;
+        			->addColumn('action', function($role){
+			            
+                        return view('partials.buttons.datatable',[
+                            'show'    => route('menu-permission.show', $role->role_id),
+                            'edit'    => route('menu-permission.edit', $role->role_id)
+                        ]);
 			        })
 			        ->rawColumns(['menu', 'permission', 'action']) // to html
 		            ->make(true);

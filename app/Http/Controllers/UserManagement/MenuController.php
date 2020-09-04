@@ -103,7 +103,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-       return $this->menuRepo->delete($id);
+       return $this->menuRepo->deleteMenu($id);
     }
 
     /**

@@ -117,25 +117,15 @@ trait DatatableTrait
         $model             = $this->model;
         $route             = $route ?? $this->model->getTable();
         $key               = $key ?? $this->model->getKeyName();
-        $permissions       = $this->availablePermission();
 
-        return $datatable->addColumn('action', function($model) use($route, $key, $datatableButtons, $permissions){
+        return $datatable->addColumn('action', function($model) use($route, $key, $datatableButtons){
             $btn_action = '';
 
-
-            if ( in_array("show", $datatableButtons) && in_array("show", $permissions) ) {
-                $btn_action .= '<a title="Show details" href="'. route($route.'.show', $model->$key) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-search"></i></a>';
-            }
-
-            if ( in_array("edit", $datatableButtons) && in_array("edit", $permissions) ) {
-                $btn_action .= '<a title="Edit details" href="'. route($route.'.edit', $model->$key) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-edit"></i></a>';
-            }
-
-            if ( in_array("destroy", $datatableButtons ) && in_array("destroy", $permissions) ) {
-                $btn_action .= '<a title="Delete" href="'. route($route.'.destroy', $model->$key) .'" class="btn cur-p btn-outline-primary btn-datatable btn-delete-datatable"><i class="fa fa-trash"></i></a>';
-            }
-
-            return $btn_action;
+            return view('partials.buttons.datatable',[
+                'show'    => in_array("show", $datatableButtons ) ? route($route.'.show', $model->$key) : null,
+                'edit'    => in_array("edit", $datatableButtons ) ? route($route.'.edit', $model->$key) : null,
+                'destroy' => in_array("destroy", $datatableButtons ) ? route($route.'.destroy', $model->$key) : null
+            ]);
         });
     }
 

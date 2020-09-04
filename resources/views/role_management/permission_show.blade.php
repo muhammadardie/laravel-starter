@@ -51,7 +51,7 @@
               </div>
             </div>
              <div class="card-action">
-            @include('partials.form-submit', ['noSubmit' => true])
+              @include('partials.buttons.submit', ['noSubmit' => true])
           </div>
         </form>
       </div>

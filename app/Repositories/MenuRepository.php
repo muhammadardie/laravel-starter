@@ -51,32 +51,50 @@ class MenuRepository extends BaseRepository
 
     public function storeMenu($request) {
         $request['id_parent'] = $request['id_parent'] === "0" ? null : $request['id_parent'];
-        $higherOrder = $this->reorderMenu($request);
+        $increaseMenu = $this->reorderMenu($request, true);
 
         return $this->store($request);
     }
 
     public function updateMenu($request, $menuId) {
         $request['id_parent'] = $request['id_parent'] === "0" ? null : $request['id_parent'];
-        $higherOrder = $this->reorderMenu($request);
+        $increaseMenu = $this->reorderMenu($request, true);
 
         return $this->update($request, $menuId);
     }
 
-    public function reorderMenu($request) {
-        $higherOrder  = false;
-        $higherOrders = $this->model
+    public function deleteMenu($menuId) {
+        $menu = $this->show($menuId)->toArray();
+        $decreaseMenu = $this->reorderMenu($menu, false);
+
+        return $this->delete($menuId);
+    }
+
+    /* when increase true then add order higher menu by 1
+    *  when increase false then reduce order higher menu by 1
+    */
+    public function reorderMenu($request, $increase) {
+        $higherOrder  = $this->model
                             ->getModel()
                             ->where('id_parent', $request['id_parent'])
-                            ->where('order', '>=', $request['order'])
-                            ->get();
-
-        foreach ($higherOrders as $higherOrder) {
-            $newOrder = $higherOrder->order + 1;
-            $higherOrder->update(['order' => $newOrder]);
+                            ->where('order', $request['order'])
+                            ->first();
+        $higherOrders = [];
+        
+        if($higherOrder){
+            $higherOrders = $this->model
+                                 ->getModel()
+                                 ->where('id_parent', $request['id_parent'])
+                                 ->where('order', '>=', $request['order'])
+                                 ->get();
         }
 
-        return $higherOrder;
+        foreach ($higherOrders as $menu) {
+            $newOrder = $increase ? $menu->order + 1 : $menu->order - 1;
+            $menu->update(['order' => $newOrder]);
+        }
+
+        return true;
     }
 
 }

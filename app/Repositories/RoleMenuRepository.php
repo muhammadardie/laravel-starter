@@ -158,18 +158,11 @@ class RoleMenuRepository extends BaseRepository
 			            return $this->appendMenuByRole($role->role_id);
 			        })
         			->addColumn('action', function($role) use($permissions){
-			            $btn_action = '';
-
-			            if ( in_array("show", $permissions) ) {
-			                $btn_action .= '<a title="Show details" href="'. route('role-menu.show', $role->role_id) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-search"></i></a>';
-			            }
-
-			            if ( in_array("edit", $permissions) ) {
-			                $btn_action .= '<a title="Edit details" href="'. route('role-menu.edit', $role->role_id) .'" class="btn cur-p btn-outline-primary btn-datatable"><i class="fa fa-edit"></i></a>';
-			            }
-
-
-			            return $btn_action;
+			            
+                        return view('partials.buttons.datatable',[
+                            'show'    => route('role-menu.show', $role->role_id),
+                            'edit'    => route('role-menu.edit', $role->role_id)
+                        ]);
 			        })
 			        ->rawColumns(['menu', 'action']) // to html
 		            ->make(true);
@@ -181,8 +174,14 @@ class RoleMenuRepository extends BaseRepository
         $menus      = $role->menu;
         $stringMenu = '';
 
-        foreach ($menus as $value) {
+        foreach ($menus as $key => $value) {
             $stringMenu .= '<code>'. $value->name .'</code>&ensp;';
+
+            // if menu more than 10 just add ...
+            if($key > 10) {
+                $stringMenu .= '<code>etc...</code>';
+                break;
+            } 
         }
         
         // return \Helper::limitText($stringMenu, 10);

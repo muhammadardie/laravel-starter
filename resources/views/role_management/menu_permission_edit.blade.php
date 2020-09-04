@@ -161,7 +161,7 @@
             </div>
             <input type="hidden" name="menu_permission" />
             <div class="card-action">
-            @include('partials.form-submit')
+            @include('partials.buttons.submit')
           </div>
         </form>
       </div>

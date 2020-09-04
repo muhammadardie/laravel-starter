@@ -81,7 +81,7 @@
               </div>
           </div>
           <div class="card-action">
-            @include('partials.form-submit')
+            @include('partials.buttons.submit')
           </div>
         </form>
       </div>
