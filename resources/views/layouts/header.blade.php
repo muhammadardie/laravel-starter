@@ -52,10 +52,10 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="dropdown-divider"></div>
+                                {{-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item edit-profile-account" href="#">Profile</a>
                                 <a class="dropdown-item edit-password-account" href="#">Change Password</a>
-                                <a class="dropdown-item delete-account" href="#" data-href="{{ url('') }}">Delete Account</a>
+                                <a class="dropdown-item delete-account" href="#" data-href="{{ url('') }}">Delete Account</a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a id="logout" href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout

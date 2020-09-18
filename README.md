@@ -24,5 +24,8 @@ Laravel starter kit with built in configured package for starting new project.
 
 ## Login
 
-email: admin@mail.com
-password: 123456
+URL: https://laravel-starter-app.herokuapp.com/
+
+Email: admin@mail.com
+
+Password: 123456

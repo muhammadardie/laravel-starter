@@ -16,12 +16,12 @@
                         <span>
                             {{ Auth::user()->name }}
                             <span class="user-level">{{ Auth::user()->role->name }}</span>
-                            <span class="caret"></span>
+                            {{-- <span class="caret"></span> --}}
                         </span>
                     </a>
                     <div class="clearfix"></div>
 
-                    <div class="collapse in" id="collapseExample">
+                    {{-- <div class="collapse in" id="collapseExample">
                         <ul class="nav">
                             <li>
                                 <a href="#profile" class="edit-profile-account">
@@ -44,7 +44,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <ul class="nav nav-primary">
