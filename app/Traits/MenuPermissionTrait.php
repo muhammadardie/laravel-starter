@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Models\RoleManagement\{ RoleMenu, MenuPermission };
+use App\Models\RoleManagement\{ RoleMenu, MenuPermission, Permission };
 
 trait MenuPermissionTrait
 {
@@ -47,6 +47,14 @@ trait MenuPermissionTrait
         $currentRoute->put('full', $route);
 
         return $currentRoute[$param];
+    }
+
+    public function currentPermissionDetail() {
+        $permission['name'] = \Route::getCurrentRoute()->getActionMethod(); 
+        $permissionRecord   = Permission::where('action', $permission['name'])->first();
+        $permission['page'] = $permissionRecord ? $permissionRecord->name : ''; 
+        
+        return $permission;
     }
 
     public function currentMenu() {

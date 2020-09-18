@@ -11,7 +11,8 @@ class NavigationComposer
 	public function compose($view)
 	{
 	    $view->with('menus',  $this->menuSidebar())
-	         ->with('menuActive',  $this->currentMenu());
+	         ->with('menuActive',  $this->currentMenu())
+	         ->with('permission', $this->currentPermissionDetail());
 	}
 
 	

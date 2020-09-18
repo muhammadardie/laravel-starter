@@ -1,10 +1,10 @@
 <div class="page-header">
-
+	<h4 class="page-title">{{ $menuActive->name }}</h4>
+	
 	@foreach($menus as $parent)
 
       @if($parent['active'])
 	
-		<h4 class="page-title">{{ $parent['name'] }}</h4>
 		<ul class="breadcrumbs">
 			<li class="nav-home">
 				<a href="{{ Route::has($parent['route']. '.index') ? route($parent['route']. '.index') : 'javascript:;' }}">
@@ -36,6 +36,16 @@
 									</li>
 									<li class="nav-item">
 										<a href="{{ Route::has($submenu['route']. '.index') ? route($submenu['route']. '.index') : 'javascript:;' }}">{{ $submenu['name'] }}</a>
+									</li>
+
+									<li class="separator">
+										<i class="flaticon-right-arrow"></i>
+									</li>
+
+									<li class="nav-item">
+										<a href="{{ url()->current() }}">
+											{{ $permission['page'] }}
+										</a>
 									</li>
 
 								@endif
