@@ -1,5 +1,7 @@
 FROM php:7.4-fpm
 
+COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -21,7 +23,7 @@ RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-EXPOSE 7400
+EXPOSE 9000
 
 # Set working directory
 WORKDIR /var/www

@@ -7,7 +7,7 @@ services:
     build: .docker/php
     container_name: laravel-starter
     ports:
-      - 7400:7400
+      - 9000:9000
     volumes:
       - .:/var/www:cached
     networks:
